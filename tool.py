@@ -1,12 +1,17 @@
 import pygame
+import random
+from pygame import surfarray
 from pygame.locals import *
 pygame.init()
 screen = pygame.display.set_mode((280,280))
 run = True
 last = None
 down = False
+color = (255,255,255)
 while run:
     pygame.time.delay(100)
+    clock = pygame.time.Clock()
+    clock.tick(900)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             run = False
@@ -16,17 +21,19 @@ while run:
             if (down):
                 mouse_pos = pygame.mouse.get_pos()
                 if last is not None:
-                    pygame.draw.line(screen, (255,255,255), last, mouse_pos)
+                    pygame.draw.aaline(screen, color, mouse_pos, last)
                 last = mouse_pos
-        if event.type == pygame.KEYDOWN:
-            if pygame.key == pygame.K_SPACE:
-                print("Space")
+        if pygame.key.get_pressed()[K_SPACE]:
+            screen.fill((0,0,0))
+        if pygame.key.get_pressed()[K_KP_ENTER]:
+            draw()
         if event.type == pygame.MOUSEBUTTONUP:
             down = False
             last = None
                 
         def draw():
-            pygame.draw.line()
+            num = surfarray.array2d(screen)
+            print(num.shape)
                 
     pygame.display.update()
     
